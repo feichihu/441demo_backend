@@ -10,3 +10,41 @@ This will restart the application completely
 # What this demo can do?
 1. addchatt
 2. getchatt
+
+# File structure
+.
+├── chat<br />
+│   ├── __init__.py<br />
+│   ├── __init__.pyc<br />
+│   ├── admin.py<br />
+│   ├── apps.py<br />
+│   ├── migrations<br />
+│   │   └── __init__.py<br />
+│   ├── models.py<br />
+│   ├── tests.py<br />
+│   └── views.pyc<br />
+├── chatter<br />
+│   ├── __init__.py<br />
+│   ├── __init__.pyc<br />
+│   ├── admin.py<br />
+│   ├── apps.py<br />
+│   ├── migrations<br />
+│   │   └── __init__.py<br />
+│   ├── models.py<br />
+│   ├── tests.py<br />
+│   ├── views.py<br />
+│   └── views.pyc<br />
+├── demo<br />
+│   ├── README.md<br />
+│   └── manage.py<br />
+├── django_project<br />
+│   ├── __init__.py<br />
+│   ├── __init__.pyc<br />
+│   ├── settings.py<br />
+│   ├── settings.py.orig<br />
+│   ├── settings.pyc<br />
+│   ├── urls.py<br />
+│   ├── urls.pyc<br />
+│   ├── wsgi.py<br />
+│   └── wsgi.pyc<br />
+└── manage.py<br />
