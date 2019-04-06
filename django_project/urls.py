@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.urls import path
 from django.contrib import admin
 from user import views
 # from chatter import views
@@ -23,6 +22,6 @@ urlpatterns = [
     # url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	# url(r'^addchatt/$', views.addchatt, name='addchatt'),
     # url(r'^adduser/$', views.adduser, name='adduser'),
-    path(r'^profile/<int:user_id>', views.getuser, name='getuser'),
+    url(r'^profile/[0-9]{1}', views.getuser, name='getuser'),
     url(r'^admin/', include(admin.site.urls)),
 ]
