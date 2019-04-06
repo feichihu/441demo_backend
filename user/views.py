@@ -19,13 +19,16 @@ import json
 #     level: 1 
 # }
 def getuser(request):
+    print "I'm in"
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM Users;')
     return_data = cursor.fetchall()
+    print return_data
     result = {}
     result = return_data
+    print result
     return JsonResponse(result)
 
 @csrf_exempt
