@@ -13,7 +13,7 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import include, url, path
 from django.contrib import admin
 from user import views
 # from chatter import views
@@ -22,6 +22,6 @@ urlpatterns = [
     # url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	# url(r'^addchatt/$', views.addchatt, name='addchatt'),
     # url(r'^adduser/$', views.adduser, name='adduser'),
-    url(r'^profile/<int:user_id>', views.getuser, name='getuser'),
+    path(r'^profile/<int:user_id>', views.getuser, name='getuser'),
     url(r'^admin/', include(admin.site.urls)),
 ]
