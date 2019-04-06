@@ -18,7 +18,7 @@ import json
 #     token: 100,
 #     level: 1 
 # }
-def getuser(request, user_id):
+def getuser(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
