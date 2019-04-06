@@ -23,7 +23,7 @@ def getuser(request):
         return HttpResponse(status=404)
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM Users;')
-    return_data = cursor.fetchone()
+    return_data = cursor.fetchall()
     result = {}
     result = return_data
     return JsonResponse(result)
