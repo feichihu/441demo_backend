@@ -28,11 +28,11 @@ def getuser(request):
     return_data = cursor.fetchone()
     print return_data
     result = {}
-    result['u_id'] = return_data['u_id']
-    result['username'] = return_data['username']
-    result['img_id'] = return_data['img_id']
-    result['token'] = return_data['token']
-    result['level'] = return_data['level']
+    result['u_id'] = return_data[0]
+    result['username'] = return_data[1]
+    result['img_id'] = return_data[2]
+    result['token'] = return_data[3]
+    result['level'] = return_data[4]
     print result
     return JsonResponse(result)
 
