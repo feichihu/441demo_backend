@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from user import views
+# from user import views
+from chatter import views
 
 urlpatterns = [
-    # url(r'^getchatts/$', views.getchatts, name='getchatts'),
+    url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	url(r'^addchatt/$', views.addchatt, name='addchatt'),
     url(r'^adduser/$', views.adduser, name='adduser'),
-    url(r'^profile/<int:user_id>', views.getuser, name='getuser'),
+    # url(r'^profile/<int:user_id>', views.getuser, name='getuser'),
     url(r'^admin/', include(admin.site.urls)),
 ]
