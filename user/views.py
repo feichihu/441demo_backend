@@ -23,11 +23,16 @@ def getuser(request):
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
+    print "I'm in 2"
     cursor.execute('SELECT * FROM Users;')
-    return_data = cursor.fetchall()
+    return_data = cursor.fetchone()
     print return_data
     result = {}
-    result = return_data
+    result['u_id'] = return_data[0]['u_id']
+    result['username'] = return_data['username']
+    result['img_id'] = return_data['img_id']
+    result['token'] = return_data['token']
+    result['level'] = return_data['level']
     print result
     return JsonResponse(result)
 
