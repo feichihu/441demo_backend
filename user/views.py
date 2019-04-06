@@ -28,7 +28,7 @@ def getuser(request):
     return_data = cursor.fetchone()
     print return_data
     result = {}
-    result['u_id'] = return_data[0]['u_id']
+    result['u_id'] = return_data['u_id']
     result['username'] = return_data['username']
     result['img_id'] = return_data['img_id']
     result['token'] = return_data['token']
