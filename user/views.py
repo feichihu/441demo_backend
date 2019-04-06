@@ -22,7 +22,7 @@ def getuser(request, user_id):
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(user_id) + ';')
+    cursor.execute('SELECT * FROM Users;')
     return_data = cursor.fetchone()
     result = {}
     result = return_data
