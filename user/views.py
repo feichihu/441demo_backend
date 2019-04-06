@@ -19,14 +19,16 @@ import json
 #     level: 1 
 # }
 def getuser(request, user_id):
-    if request.method != 'GET':
-        return HttpResponse(status=404)
-    cursor = connection.cursor()
-    cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(user_id))
-    return_data = cursor.fetchone()
-    result = {}
-    result = return_data
+    result = {"hhh":'hhh'}
     return JsonResponse(result)
+    # if request.method != 'GET':
+    #     return HttpResponse(status=404)
+    # cursor = connection.cursor()
+    # cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(user_id))
+    # return_data = cursor.fetchone()
+    # result = {}
+    # result = return_data
+    # return JsonResponse(result)
 
 @csrf_exempt
 def addchatt(request):
