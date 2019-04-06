@@ -18,7 +18,7 @@ import json
 #     token: 100,
 #     level: 1 
 # }
-def getuser(request, user_id):
+def getuser(request):
     result = {"hhh":'hhh'}
     return JsonResponse(result)
     # if request.method != 'GET':
