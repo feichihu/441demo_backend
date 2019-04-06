@@ -22,6 +22,6 @@ urlpatterns = [
     # url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	# url(r'^addchatt/$', views.addchatt, name='addchatt'),
     # url(r'^adduser/$', views.adduser, name='adduser'),
-    url(r'^profile/$', views.getuser, name='getuser'),
+    url(r'^profile/(?P<user_id>[0-9]+)/$', views.getuser, name='getuser'),
     url(r'^admin/', include(admin.site.urls)),
 ]

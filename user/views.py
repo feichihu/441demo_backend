@@ -18,13 +18,13 @@ import json
 #     token: 100,
 #     level: 1 
 # }
-def getuser(request):
+def getuser(request, user_id):
     print "I'm in"
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
     print "I'm in 2"
-    cursor.execute('SELECT * FROM Users;')
+    cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(user_id) + ';')
     return_data = cursor.fetchone()
     print return_data
     result = {}
