@@ -64,14 +64,15 @@ def getleaderboard(request, user_id):
         the_row['username'] = item[1]
         the_row['token'] = item[2]
         the_id = item[0]
-        # if the_id < user_id:
-        #     cursor.execute('SELECT * FROM Friends WHERE u1_id = ' + the_id + ' AND u2_id = ' + user_id + ';')
-        # elif the_id > user_id:
-        #     cursor.execute('SELECT * FROM Friends WHERE u1_id = ' + user_id + ' AND u2_id = ' + the_id + ';')
-        # return_data = cursor.fetchone()
-        # if return_data[0]:
-        #     the_row['if_friend'] = True
-        # else: the_row['if_friend'] = False
+        cursor2 = connection.cursor()
+        if the_id < user_id:
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + the_id + ' AND u2_id = ' + user_id + ';')
+        elif the_id > user_id:
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + user_id + ' AND u2_id = ' + the_id + ';')
+        return_data = cursor.fetchone()
+        if return_data[0]:
+            the_row['if_friend'] = True
+        else: the_row['if_friend'] = False
         row.append(the_row)
     result['leaderboard'] = row
     return JsonResponse(result)
