@@ -142,7 +142,7 @@ def getleaderboard(request, user_id):
             cursor2.execute(the_string)
         rd = cursor2.fetchall()
         print rd
-        if rd[0]:
+        if rd != []:
             the_row['if_friend'] = True
         the_row['if_friend'] = False
 
