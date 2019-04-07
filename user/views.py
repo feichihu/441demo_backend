@@ -136,6 +136,7 @@ def getleaderboard(request, user_id):
             cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' ;')
         print "2"
         rd = cursor2.fetchall()
+        print rd
         for the_tuple in rd:
             if (the_tuple[0] == the_id and the_tuple[1] == user_id) or (the_tuple[1] == the_id and the_tuple[0] == user_id):
                 the_row['if_friend'] = True
