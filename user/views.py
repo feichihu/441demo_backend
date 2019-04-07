@@ -165,7 +165,7 @@ def adduser(request):
     ID += 1
     cursor = connection.cursor()
     print "here"
-    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES (" + str(ID) + ", " + str(username) + ", " + str(0) + ", " + str(img_id) + ", 1);"
+    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES (" + str(ID) + ", '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
     print toExecute
     cursor.execute(toExecute)
     return JsonResponse({})
