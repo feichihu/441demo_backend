@@ -186,8 +186,8 @@ def adduser(request):
     return JsonResponse({})
 
 
-# @csrf_exempt
-# def updatename(request):
+@csrf_exempt
+def updatename(request):
 #     if request.method != 'POST':
 #         return HttpResponse(status=404)
 #     json_data = json.loads(request.body)
@@ -200,7 +200,7 @@ def adduser(request):
 #     print toExecute
 #     cursor.execute(toExecute)
 #     print "here"
-#     return JsonResponse({})
+    return JsonResponse({})
 
 
 @csrf_exempt
