@@ -141,7 +141,7 @@ def getleaderboard(request, user_id):
             print the_string
             cursor2.execute(the_string)
         # rd = cursor2.fetchall()
-        print rd
+        # print rd
         if cursor2.countrow != 0:
             the_row['if_friend'] = True
         the_row['if_friend'] = False
