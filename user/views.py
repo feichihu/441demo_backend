@@ -185,7 +185,7 @@ def adduser(request):
     ID += 1
     cursor = connection.cursor()
     cursor.execute('INSERT INTO users (u_id, username, token, img_id, level) VALUES '
-                    '(%d, %s, %d, %d, %d);', (ID, username, 0, img_id, 0))
+                    '(%d, %s, %d, %d, %d);', (ID, username, 0, img_id, 1))
     return JsonResponse({})
 
 
@@ -198,8 +198,8 @@ def updatename(request):
     u_id = json_data['u_id']
     username = json_data['username']
     cursor = connection.cursor()
-    cursor.execute('UPDATE users SET username = ' + str(username) +
-                    'WHERE u_id = ' + str(u_id) + ';')
+    cursor.execute("UPDATE users SET username = '" + str(username) +
+                    "' WHERE u_id = " + str(u_id) + ";")
     print "here"
     return JsonResponse({})
 
