@@ -186,21 +186,21 @@ def adduser(request):
     return JsonResponse({})
 
 
-@csrf_exempt
-def updatename(request):
-    if request.method != 'POST':
-        return HttpResponse(status=404)
-    json_data = json.loads(request.body)
-    print json_data
-    u_id = json_data['u_id']
-    username = json_data['username']
-    cursor = connection.cursor()
-    toExecute = "UPDATE users SET username = '" + str(username) +
-                    "' WHERE u_id = " + str(u_id) + ";"
-    print toExecute
-    cursor.execute(toExecute)
-    print "here"
-    return JsonResponse({})
+# @csrf_exempt
+# def updatename(request):
+#     if request.method != 'POST':
+#         return HttpResponse(status=404)
+#     json_data = json.loads(request.body)
+#     print json_data
+#     u_id = json_data['u_id']
+#     username = json_data['username']
+#     cursor = connection.cursor()
+#     toExecute = "UPDATE users SET username = '" + str(username) +
+#                     "' WHERE u_id = " + str(u_id) + ";"
+#     print toExecute
+#     cursor.execute(toExecute)
+#     print "here"
+#     return JsonResponse({})
 
 
 @csrf_exempt
