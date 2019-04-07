@@ -148,7 +148,8 @@ def getleaderboard(request, user_id):
         #         break
         if rd:
             the_row['if_friend'] = True
-        the_row['if_friend'] = False
+        else:
+            the_row['if_friend'] = False
 
         # print return_data
         # print type(return_data)
