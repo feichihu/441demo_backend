@@ -54,7 +54,6 @@ def getuser(request, user_id):
 #     ]
 # }
 def getfriends(request, user_id):
-    print "I'm in"
     if request.method != 'GET':
         return HttpResponse(status=404)
 
@@ -68,8 +67,7 @@ def getfriends(request, user_id):
     friends2 = cursor2.fetchall()
     friends2 = [i[0] for i in friends2]
     friends = friends1 + friends2
-    
-    print friends
+
 
     for f_id in friends:
         friend_info = {}
@@ -77,7 +75,6 @@ def getfriends(request, user_id):
         cursor3.execute('SELECT * FROM users WHERE u_id = ' + str(f_id) + ';')
         f_info = cursor3.fetchone()
 
-        print 'f_info', f_info
 
         friend_info['username'] = f_info[1]
         friend_info['img_id'] = f_info[3]
@@ -86,12 +83,9 @@ def getfriends(request, user_id):
                         'WHERE score = ( SELECT max(score) FROM songs )')
         f_song_info = cursor4.fetchone()
 
-        print 'f_song_info', f_song_info
-
         friend_info['best_song'] = f_song_info[0]
         result['friends'].append(friend_info)
 
-    print result
     return JsonResponse(result)
 
 
@@ -165,7 +159,7 @@ def adduser(request):
     img_id = json_data['img_id']
     cursorid = connection.cursor()
     cursorid.execute('SELECT MAX(u_id) FROM Users;')
-    return_data = cursor.fetchone()
+    return_data = cursorid.fetchone()
     ID = return_data[0]
     ID += 1
     cursor = connection.cursor()
@@ -204,11 +198,8 @@ def addfriend(request):
         temp = user2
         user2 = user1
         user1 = temp
-    print user1
-    print user2
     cursor = connection.cursor()
     toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
-    print toExecute
     cursor.execute(toExecute)
     return JsonResponse({})
 
