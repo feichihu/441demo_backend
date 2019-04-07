@@ -126,6 +126,7 @@ def getleaderboard(request, user_id):
         the_row['username'] = item[1]
         the_row['token'] = item[2]
         the_id = item[0]
+
         cursor2 = connection.cursor()
         print "1"
         print the_id
@@ -137,12 +138,13 @@ def getleaderboard(request, user_id):
         print "2"
         rd = cursor2.fetchall()
         print rd
+        print the_id
         for the_tuple in rd:
             if (the_tuple[0] == the_id and the_tuple[1] == user_id) or (the_tuple[1] == the_id and the_tuple[0] == user_id):
                 the_row['if_friend'] = True
                 break
         the_row['if_friend'] = False
-            
+
         # print return_data
         # print type(return_data)
         # print cursor2.rowcount
