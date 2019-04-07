@@ -198,8 +198,10 @@ def updatename(request):
     u_id = json_data['u_id']
     username = json_data['username']
     cursor = connection.cursor()
-    cursor.execute("UPDATE users SET username = '" + str(username) +
-                    "' WHERE u_id = " + str(u_id) + ";")
+    toExecute = "UPDATE users SET username = '" + str(username) +
+                    "' WHERE u_id = " + str(u_id) + ";"
+    print toExecute
+    cursor.execute(toExecute)
     print "here"
     return JsonResponse({})
 
