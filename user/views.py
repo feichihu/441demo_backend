@@ -129,17 +129,14 @@ def getleaderboard(request, user_id):
         the_id = item[0]
 
         cursor2 = connection.cursor()
-        print "1"
-        print the_id
-        print type(the_id)
+        print 'the_id:' + str(the_id)
+        print 'user_id:' + str(user_id)
         if the_id < user_id:
-            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' ;')
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;')
         elif the_id > user_id:
-            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' ;')
-        print "2"
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;')
         rd = cursor2.fetchall()
         print rd
-        print the_id
         for the_tuple in rd:
             if (the_tuple[0] == the_id and the_tuple[1] == user_id) or (the_tuple[1] == the_id and the_tuple[0] == user_id):
                 the_row['if_friend'] = True
