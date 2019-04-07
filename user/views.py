@@ -69,13 +69,13 @@ def getleaderboard(request, user_id):
         print the_id
         print type(the_id)
         if the_id < user_id:
-            rows_count = cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;')
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;')
         elif the_id > user_id:
-            rows_count = cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;')
+            cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;')
         print "2"
-        return_data = cursor.fetchone()
+        return_data = cursor2.fetchone()
         print return_data
-        if rows_count != 0:
+        if return_data != None:
             the_row['if_friend'] = True
         else: the_row['if_friend'] = False
         print the_row
