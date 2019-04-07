@@ -32,6 +32,68 @@ def getuser(request, user_id):
     result['level'] = return_data[4]
     return JsonResponse(result)
 
+# Return user friends information.
+# This is for user profile page.
+# Input http:hostname/profile/friends/1
+# return json is like:
+# {
+#     'friends':
+#     [
+#         {
+#             'u_id': 2,
+#             'username': 'jhe',
+#             'img_id': 5,
+#             'best_song': 'love story'
+#         },
+#         {
+#             'u_id': 3,
+#             'username': 'cmm',
+#             'img_id': 8,
+#             'best_song': 'in the name of father'
+#         }
+#     ]
+# }
+def getfriends(request, user_id):
+    print "I'm in"
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+
+    result = {'friends': []}
+    cursor1 = connection.cursor()
+    cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) + ';')
+    friends1 = cursor1.fetchall()
+    friends1 = [i[1] for i in friends1]
+    cursor2 = connection.cursor()
+    cursor2.execute('SELECT * FROM friends WHERE u2_id = ' + str(user_id) + ';')
+    friends2 = cursor2.fetchall()
+    friends2 = [i[1] for i in friends2]
+    friends = friends1 + friends2
+    
+    print friends
+
+    for f_id in friends:
+        friend_info = {}
+        cursor3 = connection.cursor()
+        cursor3.execute('SELECT * FROM users WHERE u_id = ' + str(f_id) + ';')
+        f_info = cursor3.fetchone()
+
+        print 'f_info', f_info
+
+        friend_info['username'] = f_info[1]
+        friend_info['img_id'] = f_info[3]
+        cursor4 = connection.cursor()
+        cursor4.execute('SELECT album_name FROM songs ' +
+                        'WHERE score = ( SELECT max(score) FROM songs )')
+        f_song_info = cursor4.fetchone()
+
+        print 'f_song_info', f_song_info
+
+        friend_info['best_song'] = f_song_info[0]
+        result['friends'].append(friend_info)
+
+    print result
+    return JsonResponse(result)
+
 
 # Return leaderboard information.
 # This is for leaderboard page.
@@ -128,16 +190,18 @@ def updatename(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
+    print json_data
     u_id = json_data['u_id']
     username = json_data['username']
     cursor = connection.cursor()
     cursor.execute('UPDATE users SET username = ' + str(username) +
                     'WHERE u_id = ' + str(u_id) + ';')
+    print "here"
     return JsonResponse({})
 
 
 @csrf_exempt
-def addFriend(request):
+def addfriend(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)

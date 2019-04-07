@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^adduser/$', views.adduser, name='adduser'),
     url(r'^updatename/$', views.updatename, name='updatename'),
     url(r'^addfriend/$', views.addfriend, name='addfriend'),
+    url(r'^profile/friends/(?P<user_id>[0-9]+)/$', views.getfriends, name='getfriends'),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
