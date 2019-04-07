@@ -119,6 +119,7 @@ def getleaderboard(request, user_id):
     row = []
     rank = 0
     for item in return_data:
+        print item
         rank += 1
         the_row = {}
         the_row['rank'] = rank
