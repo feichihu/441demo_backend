@@ -89,9 +89,10 @@ def getfriends(request, user_id):
         print 'f_song_info', f_song_info
 
         friend_info['best_song'] = f_song_info[0]
+        result['friends'].append(friend_info)
 
-    print friend_info
-    return JsonResponse(friend_info)
+    print result
+    return JsonResponse(result)
 
 
 # Return leaderboard information.
