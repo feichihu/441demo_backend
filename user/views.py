@@ -198,15 +198,14 @@ def addfriend(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
-    u1_id = json_data['u1_id']
-    u2_id = json_data['u2_id']
-    if u1_id > u2_id:
-        temp = u2_id
-        u2_id = u1_id
-        u1_id = temp
-    print u1_id
-    print u2_id
+    user1 = json_data['u1_id']
+    user2 = json_data['u2_id']
+    if int(user1) > int(user2):
+        temp = user2
+        user2 = user1
+        user1 = temp
+    print user1
+    print user2
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES ' +
-                    '(%d, %d);', (int(u1_id), int(u2_id)))
+    cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES (%d, %d);', (int(user1), int(user2)))
     return JsonResponse({})
