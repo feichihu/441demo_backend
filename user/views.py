@@ -181,11 +181,13 @@ def updatename(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
+    print json_data
     u_id = json_data['u_id']
     username = json_data['username']
     cursor = connection.cursor()
     cursor.execute('UPDATE users SET username = ' + str(username) +
                     'WHERE u_id = ' + str(u_id) + ';')
+    print "here"
     return JsonResponse({})
 
 
