@@ -66,7 +66,7 @@ def getfriends(request, user_id):
     cursor2 = connection.cursor()
     cursor2.execute('SELECT * FROM friends WHERE u2_id = ' + str(user_id) + ';')
     friends2 = cursor2.fetchall()
-    friends2 = [i[1] for i in friends2]
+    friends2 = [i[0] for i in friends2]
     friends = friends1 + friends2
     
     print friends
