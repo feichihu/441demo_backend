@@ -129,8 +129,8 @@ def getleaderboard(request, user_id):
         the_id = item[0]
 
         cursor2 = connection.cursor()
-        print 'the_id:' + str(the_id)
-        print 'user_id:' + str(user_id)
+        print 'the_id:' + str(the_id) + type(the_id)
+        print 'user_id:' + str(user_id) + type(user_id)
         
         if the_id < user_id:
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;'
