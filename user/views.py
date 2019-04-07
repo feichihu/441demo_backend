@@ -70,6 +70,7 @@ def getleaderboard(request, user_id):
         elif the_id > user_id:
             cursor2.execute('SELECT * FROM Friends WHERE u1_id = ' + user_id + ' AND u2_id = ' + the_id + ';')
         return_data = cursor.fetchone()
+        print return_data
         if return_data[0]:
             the_row['if_friend'] = True
         else: the_row['if_friend'] = False
