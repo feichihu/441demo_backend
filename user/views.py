@@ -9,7 +9,7 @@ import json
 
 # Return user information.
 # This is for user profile page.
-# Input http:hostname/profile/1
+# Input: http:hostname/profile/{user_id}
 # return json is like:
 # {
 #     u_id: 1,
@@ -19,22 +19,63 @@ import json
 #     level: 1 
 # }
 def getuser(request, user_id):
-    print "I'm in"
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
-    print "I'm in 2"
     cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(user_id) + ';')
     return_data = cursor.fetchone()
-    print return_data
     result = {}
     result['u_id'] = return_data[0]
     result['username'] = return_data[1]
     result['img_id'] = return_data[2]
     result['token'] = return_data[3]
     result['level'] = return_data[4]
-    print result
     return JsonResponse(result)
+
+
+# Return leaderboard information.
+# This is for leaderboard page.
+# Input: http:hostname/leaderboard/{user_id}
+# return json is like:
+# {
+#   leaderboard:
+#   [{
+#       rank: 1,
+#       img_id: 1,
+#       username: llw,
+#       token: 10000,
+#       if_friend: true
+#   }]
+# }
+def getleaderboard(request, user_id):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM Users ORDER BY token DESC;')
+    return_data = cursor.fetchall()
+    result = {}
+    row = []
+    rank = 0
+    for item in return_data:
+        rank += 1
+        the_row = {}
+        the_row['rank'] = rank
+        the_row['img_id'] = item[2]
+        the_row['username'] = item[1]
+        the_row['token'] = item[3]
+        the_id = item[0]
+        if the_id < user_id:
+            cursor.execute('SELECT * FROM Friends WHERE u1_id = ' + the_id + ' AND u2_id = ' + user_id + ';')
+        elif the_id > user_id:
+            cursor.execute('SELECT * FROM Friends WHERE u1_id = ' + user_id + ' AND u2_id = ' + the_id + ';')
+        return_data = cursor.fetchone()
+        if return_data[0]:
+            the_row['if_friend'] = True
+        else: the_row['if_friend'] = False
+        row.append(the_row)
+    result['leaderboard'] = row
+    return JsonResponse(result)
+
 
 @csrf_exempt
 def addchatt(request):
