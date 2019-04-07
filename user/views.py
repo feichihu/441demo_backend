@@ -191,23 +191,26 @@ def adduser(request):
     return JsonResponse({})
 
 
+# curl -X POST --header "Content-Type: application/json
+# --data '{"u_id":4, "username":"yqy"}'
+# http://localhost:9000/updatename/
 @csrf_exempt
 def updatename(request):
-#     if request.method != 'POST':
-#         return HttpResponse(status=404)
-#     json_data = json.loads(request.body)
-#     print json_data
-#     u_id = json_data['u_id']
-#     username = json_data['username']
-#     cursor = connection.cursor()
-#     toExecute = "UPDATE users SET username = '" + str(username) +
-#                     "' WHERE u_id = " + str(u_id) + ";"
-#     print toExecute
-#     cursor.execute(toExecute)
-#     print "here"
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    u_id = json_data['u_id']
+    username = json_data['username']
+    cursor = connection.cursor()
+    toExecute = "UPDATE users SET username = '" + str(username) +
+                    "' WHERE u_id = " + str(u_id) + ";"
+    cursor.execute(toExecute)
     return JsonResponse({})
 
 
+# curl -X POST --header "Content-Type: application/json
+# --data '{"u1_id": 3, "u2_id": 4}'
+# http://localhost:9001/updatename/
 @csrf_exempt
 def addfriend(request):
     if request.method != 'POST':
@@ -220,6 +223,8 @@ def addfriend(request):
         temp = u2_id
         u2_id = u1_id
         u1_id = temp
-    cursor.execute('INSERT INTO Friends (u1_id, u2_id) VALUES '
+    print u1_id
+    print u2_id
+    cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES '
                     '(%d, %d);', (u1_id, u2_id))
     return JsonResponse({})
