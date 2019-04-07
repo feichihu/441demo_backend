@@ -105,9 +105,43 @@ def adduser(request):
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
     username = json_data['username']
-    name = json_data['name']
-    email = json_data['email']
+    img_id = json_data['img_id']
+    cursorid = connection.cursor()
+    cursorid.execute('SELECT MAX(u_id) FROM Users;')
+    return_data = cursor.fetchone()
+    ID = return_data[0]
+    ID += 1
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO users (username, name, email) VALUES '
-                    '(%s, %s, %s);', (username, name, email))
+    cursor.execute('INSERT INTO users (u_id, username, token, img_id, level) VALUES '
+                    '(%d, %s, %d, %d, %d);', (ID, username, 0, img_id, 0))
+    return JsonResponse({})
+
+
+@csrf_exempt
+def updatename(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    u_id = json_data['u_id']
+    username = json_data['username']
+    cursor = connection.cursor()
+    cursor.execute('UPDATE users SET username = ' + str(username) +
+                    'WHERE u_id = ' + str(u_id) + ';')
+    return JsonResponse({})
+
+
+@csrf_exempt
+def addFriend(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    u1_id = json_data['u1_id']
+    u2_id = json_data['u2_id']
+    cursor = connection.cursor()
+    if u1_id > u2_id:
+        temp = u2_id
+        u2_id = u1_id
+        u1_id = temp
+    cursor.execute('INSERT INTO Friends (u1_id, u2_id) VALUES '
+                    '(%d, %d);', (u1_id, u2_id))
     return JsonResponse({})
