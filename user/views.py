@@ -217,13 +217,13 @@ def addfriend(request):
     json_data = json.loads(request.body)
     u1_id = json_data['u1_id']
     u2_id = json_data['u2_id']
-    cursor = connection.cursor()
-    if u1_id > u2_id:
+    if int(u1_id) > int(u2_id):
         temp = u2_id
         u2_id = u1_id
         u1_id = temp
     print u1_id
     print u2_id
+    cursor = connection.cursor()
     cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES '
-                    '(%d, %d);', (u1_id, u2_id))
+                    '(%d, %d);', (int(u1_id), int(u2_id)))
     return JsonResponse({})
