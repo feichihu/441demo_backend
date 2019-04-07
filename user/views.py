@@ -75,7 +75,9 @@ def getleaderboard(request, user_id):
         print "2"
         return_data = cursor2.fetchone()
         print return_data
-        if cursor2.rowcount != 0:
+        print type(return_data)
+        print cursor2.rowcount
+        if return_data != ():
             the_row['if_friend'] = True
         else: the_row['if_friend'] = False
         print the_row
