@@ -164,7 +164,7 @@ def adduser(request):
     ID = int(return_data[0])
     ID += 1
     cursor = connection.cursor()
-    print ID
+    print "here"
     toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES (" + str(ID) + ", " + str(username) + ", " + str(0) + ", " + str(img_id) + ", 1);"
     print toExecute
     cursor.execute(toExecute)
@@ -208,55 +208,55 @@ def addfriend(request):
 
 
 # Post: ["token": ?, "score": ?, "date": ? ]
-@csrf_exempt
-def update_all(request, user_id):
-    if request.method != 'POST':
-        return HttpResponse(status=404)
-    json_data = json.loads(request.body)
+# @csrf_exempt
+# def update_all(request, user_id):
+#     if request.method != 'POST':
+#         return HttpResponse(status=404)
+#     json_data = json.loads(request.body)
 
-    print "1"
-
-
-    cursor1 = connection.cursor()
-    cursor1.execute(" SELECT * FROM "
-                    " Users WHERE u_id = %d;"
-                    user_id)
-    user_info = cursor1.fetchall()[0]
-    past_token = int(user_info['token'])
-    past_score = int(user_info['score'])
-
-    print past_token, past_score
-
-    new_token = int(json_data['token'])
-    new_score = int(json_data['score'])
-
-    token =  new_token + past_token
-    score =  new_score + past_score
-    cursor3 = connection.cursor()
-    cursor3.execute(" UPDATE Users"
-                    " SET token = %d, score = %d"
-                    " WHERE u_id = %d;",
-                    (token, score, user_id))
-
-    print token, score
-
-    cursor2 = connection.cursor()
-    cursor2.execute( " SELECT MAX(s_id) FROM "
-                     " Songs ")
-    maxid = cursor2.fetchone()['MAX(s_id)']+1
-    print maxid
-
-    sing_time = arrow.get(json_data['date'], 'YYYY-MM-DD HH:mm:ss')
-    sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
-    print sing_time
+#     print "1"
 
 
-    cursor4 = connection.cursor()
-    cursor4.execute(" INSERT Songs (s_id, u_id, sing_time, duration, score, album_name) VALUES"
-                    "(%d, %d, %s, %d, %d, %s);",
-                    (maxid, u_id, sing_time, 10, new_score, 'Alphabet Song')
-                    )
-    result = {}
+#     cursor1 = connection.cursor()
+#     cursor1.execute(" SELECT * FROM "
+#                     " Users WHERE u_id = %d;"
+#                     user_id)
+#     user_info = cursor1.fetchall()[0]
+#     past_token = int(user_info['token'])
+#     past_score = int(user_info['score'])
 
-    print("Success!")
-    return JsonResponse(result)
+#     print past_token, past_score
+
+#     new_token = int(json_data['token'])
+#     new_score = int(json_data['score'])
+
+#     token =  new_token + past_token
+#     score =  new_score + past_score
+#     cursor3 = connection.cursor()
+#     cursor3.execute(" UPDATE Users"
+#                     " SET token = %d, score = %d"
+#                     " WHERE u_id = %d;",
+#                     (token, score, user_id))
+
+#     print token, score
+
+#     cursor2 = connection.cursor()
+#     cursor2.execute( " SELECT MAX(s_id) FROM "
+#                      " Songs ")
+#     maxid = cursor2.fetchone()['MAX(s_id)']+1
+#     print maxid
+
+#     sing_time = arrow.get(json_data['date'], 'YYYY-MM-DD HH:mm:ss')
+#     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
+#     print sing_time
+
+
+#     cursor4 = connection.cursor()
+#     cursor4.execute(" INSERT Songs (s_id, u_id, sing_time, duration, score, album_name) VALUES"
+#                     "(%d, %d, %s, %d, %d, %s);",
+#                     (maxid, u_id, sing_time, 10, new_score, 'Alphabet Song')
+#                     )
+#     result = {}
+
+#     print("Success!")
+#     return JsonResponse(result)
