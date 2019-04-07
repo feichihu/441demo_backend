@@ -129,7 +129,7 @@ def updatename(request):
 
 
 @csrf_exempt
-def addFriend(request):
+def addfriend(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
