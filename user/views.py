@@ -119,7 +119,6 @@ def getleaderboard(request, user_id):
     row = []
     rank = 0
     for item in return_data:
-        print item
         rank += 1
         the_row = {}
         the_row['rank'] = rank
@@ -127,37 +126,18 @@ def getleaderboard(request, user_id):
         the_row['username'] = item[1]
         the_row['token'] = item[2]
         the_id = item[0]
-
         cursor2 = connection.cursor()
-        print 'the_id:' + str(the_id)
-        print 'user_id:' + str(user_id)
-        
         if the_id < int(user_id):
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;'
-            print the_string
             cursor2.execute(the_string)
         else:
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;'
-            print the_string
             cursor2.execute(the_string)
         rd = cursor2.fetchall()
-        print rd
-        # for the_tuple in rd:
-        #     if (the_tuple[0] == the_id and the_tuple[1] == int(user_id)) or (the_tuple[1] == the_id and the_tuple[0] == int(user_id)):
-        #         the_row['if_friend'] = True
-        #         break
         if rd:
             the_row['if_friend'] = True
         else:
             the_row['if_friend'] = False
-
-        # print return_data
-        # print type(return_data)
-        # print cursor2.rowcount
-        # if cursor2.rowcount != 0:
-        #     the_row['if_friend'] = True
-        # else: the_row['if_friend'] = False
-        print the_row
         row.append(the_row)
     result['leaderboard'] = row
     return JsonResponse(result)
