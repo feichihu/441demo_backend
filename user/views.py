@@ -207,7 +207,9 @@ def addfriend(request):
     print user1
     print user2
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES (%d, %d);', (int(user1), int(user2)))
+    toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
+    print toExecute
+    cursor.execute(toExecute)
     return JsonResponse({})
 
 
