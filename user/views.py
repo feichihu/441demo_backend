@@ -140,9 +140,9 @@ def getleaderboard(request, user_id):
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;'
             print the_string
             cursor2.execute(the_string)
-        rd = cursor2.fetchall()
+        # rd = cursor2.fetchall()
         print rd
-        if rd != []:
+        if cursor2.countrow != 0:
             the_row['if_friend'] = True
         the_row['if_friend'] = False
 
