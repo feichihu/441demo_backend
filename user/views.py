@@ -150,6 +150,7 @@ def addchatt(request):
     return JsonResponse({})
 
 
+# curl -X POST --header "Content-Type: application/json" --data '{"username":"qyao", "img_id": 2}'
 @csrf_exempt
 def adduser(request):
     if request.method != 'POST':
@@ -160,11 +161,12 @@ def adduser(request):
     cursorid = connection.cursor()
     cursorid.execute('SELECT MAX(u_id) FROM Users;')
     return_data = cursorid.fetchone()
-    ID = return_data[0]
+    ID = int(return_data[0])
     ID += 1
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO users (u_id, username, token, img_id, level) VALUES '
-                    '(%d, %s, %d, %d, %d);', (ID, username, 0, img_id, 1))
+    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES (" +
+                str(ID) + ", " + str(username) + ", " + str(0) + ", " + str(img_id) + ", 1);"
+    cursor.execute(toExecute)
     return JsonResponse({})
 
 
@@ -186,7 +188,7 @@ def updatename(request):
 
 # curl -X POST --header "Content-Type: application/json
 # --data '{"u1_id": 3, "u2_id": 4}'
-# http://localhost:9001/updatename/
+# http://localhost:9000/updatename/
 @csrf_exempt
 def addfriend(request):
     if request.method != 'POST':
