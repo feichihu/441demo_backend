@@ -140,10 +140,12 @@ def getleaderboard(request, user_id):
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;'
             print the_string
             cursor2.execute(the_string)
-        # rd = cursor2.fetchall()
-        # print rd
-        if cursor2.countrow != 0:
-            the_row['if_friend'] = True
+        rd = cursor2.fetchall()
+        print rd
+        for the_tuple in rd:
+            if (the_tuple[0] == the_id and the_tuple[1] == int(user_id)) or (the_tuple[1] == the_id and the_tuple[0] == int(user_id)):
+                the_row['if_friend'] = True
+                break
         the_row['if_friend'] = False
 
         # print return_data
@@ -215,13 +217,13 @@ def addfriend(request):
     json_data = json.loads(request.body)
     u1_id = json_data['u1_id']
     u2_id = json_data['u2_id']
-    if int(u1_id) > int(u2_id):
+    cursor = connection.cursor()
+    if u1_id > u2_id:
         temp = u2_id
         u2_id = u1_id
         u1_id = temp
     print u1_id
     print u2_id
-    cursor = connection.cursor()
     cursor.execute('INSERT INTO friends (u1_id, u2_id) VALUES '
-                    '(%d, %d);', (int(u1_id), int(u2_id)))
+                    '(%d, %d);', (u1_id, u2_id))
     return JsonResponse({})
