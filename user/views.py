@@ -75,9 +75,10 @@ def getleaderboard(request, user_id):
         print "2"
         return_data = cursor.fetchone()
         print return_data
-        if return_data[0]:
+        if return_data is not None:
             the_row['if_friend'] = True
         else: the_row['if_friend'] = False
+        print the_row
         row.append(the_row)
     result['leaderboard'] = row
     return JsonResponse(result)
