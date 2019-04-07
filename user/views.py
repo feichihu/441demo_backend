@@ -136,7 +136,7 @@ def getleaderboard(request, user_id):
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;'
             print the_string
             cursor2.execute(the_string)
-        elif the_id > int(user_id):
+        else:
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;'
             print the_string
             cursor2.execute(the_string)
