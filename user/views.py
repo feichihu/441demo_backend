@@ -142,10 +142,12 @@ def getleaderboard(request, user_id):
             cursor2.execute(the_string)
         rd = cursor2.fetchall()
         print rd
-        for the_tuple in rd:
-            if (the_tuple[0] == the_id and the_tuple[1] == int(user_id)) or (the_tuple[1] == the_id and the_tuple[0] == int(user_id)):
-                the_row['if_friend'] = True
-                break
+        # for the_tuple in rd:
+        #     if (the_tuple[0] == the_id and the_tuple[1] == int(user_id)) or (the_tuple[1] == the_id and the_tuple[0] == int(user_id)):
+        #         the_row['if_friend'] = True
+        #         break
+        if rd:
+            the_row['if_friend'] = True
         the_row['if_friend'] = False
 
         # print return_data
