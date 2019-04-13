@@ -239,10 +239,8 @@ def update_all(request):
     cursor3 = connection.cursor()
     cursor3.execute(" UPDATE Users SET token = " + str(token) + "WHERE u_id = " + str(user_id) + ";")
 
-    print token
     result = {}
 
-    print("Success!")
     return JsonResponse(result)
 
 #Post: [ u_id: xxx sing_time: xxx score: xxx link: xxx song_name: xxx]
@@ -256,15 +254,19 @@ def Update_Link(request):
     sing_time = arrow.get(sing_time, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
 
+    print "1"
+
     score = int(json_data['score'])
     link = json_data['link']
     song_name = json_data['song_name']
 
+    print "2"
+
     cursor = connection.cursor()
-    cursor.execute('INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES '
-                    '(%d, %s, %d, %s, %s);', 
-                    (u_id, sing_time, score, link, song_name))
+    cursor.execute('INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (' +str(u_id)+', '+str(sing_time)+', '+str(score)+', '+str(link)+', '+str(song_name)+');' )
     result = {}
+
+    print "Success!"
     return JsonResponse(result)
 
 
