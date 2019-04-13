@@ -209,6 +209,42 @@ def addfriend(request):
 
 #Table:
 #u_id, time, score, link, song_name
+# Post: ["u_id":  "token": ?, "score": ?]
+@csrf_exempt
+def update_all(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    user_id = int(json_data['u_id'])
+
+    print "1"
+
+    cursor1 = connection.cursor()
+    cursor1.execute(" SELECT * FROM "
+                    " Users WHERE u_id = %d;"
+                    (user_id, ))
+    user_info = cursor1.fetchall()[0]
+    past_token = int(user_info['token'])
+    past_score = int(user_info['score'])
+
+    print past_token, past_score
+
+    new_token = int(json_data['token'])
+    new_score = int(json_data['score'])
+
+    token =  new_token + past_token
+    score =  new_score + past_score
+    cursor3 = connection.cursor()
+    cursor3.execute(" UPDATE Users"
+                    " SET token = %d, score = %d"
+                    " WHERE u_id = %d;",
+                    (token, score, user_id))
+
+    print token, score
+    result = {}
+
+    print("Success!")
+    return JsonResponse(result)
 
 #Post: [ u_id: xxx sing_time: xxx score: xxx link: xxx song_name: xxx]
 @csrf_exempt
