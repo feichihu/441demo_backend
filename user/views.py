@@ -172,7 +172,7 @@ def adduser(request):
     return JsonResponse({})
 
 
-# curl -X POST --header "Content-Type: application/json
+# curl -X POST --header "Content-Type: application/json"
 # --data '{"u_id":4, "username":"yqy"}'
 # http://localhost:9000/updatename/
 @csrf_exempt
@@ -188,29 +188,44 @@ def updatename(request):
     return JsonResponse({})
 
 
-# curl -X POST --header "Content-Type: application/json
-# --data '{"u1_id": 3, "u2_id": 4}'
+# curl -X POST --header "Content-Type: application/json"
+# --data '{"wantFollower": 3, "beFollowed": 4}'
 # http://localhost:9000/updatename/
 @csrf_exempt
 def addfriend(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
-    user1 = json_data['u1_id']
-    user2 = json_data['u2_id']
+    user1 = json_data['wantFollower']
+    user2 = json_data['beFollowed']
     if int(user1) > int(user2):
         temp = user2
         user2 = user1
         user1 = temp
     cursor = connection.cursor()
+    deleteExecute = "DELETE FROM pending_friends (u1_id, u2_id) WHERE u1_id = '" + str(user2) + "';"
     toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
     cursor.execute(toExecute)
     return JsonResponse({})
 
 
-# curl -X POST --header "Content-Type: application/json
-# --data '{"u1_id": 3, "u2_id": 4}'
-# http://localhost:9000/deletepending/
+# curl -X POST --header "Content-Type: application/json"
+# --data '{"wantFollower": 3, "beFollowed": 4}'
+# http://localhost:9000/addpending/
+@csrf_exempt
+def addpending(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    wantFollower = json_data['wantFollower']
+    beFollowed = json_data['beFollowed']
+    cursor = connection.cursor()
+    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
+    cursor.execute(toExecute)
+    return JsonResponse({})
+
+
+# Post: ["token": ?, "score": ?, "date": ? ]
 @csrf_exempt
 def delete_pending(request):
     if request.method != 'POST':
