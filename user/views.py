@@ -237,10 +237,7 @@ def update_all(request):
 
     token =  new_token + past_token
     cursor3 = connection.cursor()
-    cursor3.execute(" UPDATE Users"
-                    " SET token = %d"
-                    " WHERE u_id = %d;",
-                    (token, user_id))
+    cursor3.execute(" UPDATE Users SET token = " + str(token) + "WHERE u_id = " + str(user_id) + ";")
 
     print token
     result = {}
