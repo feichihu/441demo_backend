@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^updatescore/$', views.update_all, name='updatescore'),
     url(r'^updatelink/$', views.Update_Link, name='updatelink'),
     url(r'^searchsong/$', views.Search_song, name='searchsong'),
+    url(r'^addpending/$', views.addpending, name='addpending'),
     url(r'^profile/friends/(?P<user_id>[0-9]+)/$', views.getfriends, name='getfriends'),
     url(r'^admin/', include(admin.site.urls)),
 ]
