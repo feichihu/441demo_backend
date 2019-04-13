@@ -210,7 +210,7 @@ def addfriend(request):
 
 #Table:
 #u_id, time, score, link, song_name
-# Post: ["u_id":  "token": ?, "score": ?]
+# Post: ["u_id":  "token": ?]
 @csrf_exempt
 def update_all(request):
     if request.method != 'POST':
@@ -229,23 +229,20 @@ def update_all(request):
 
     print user_info
 
-    past_token = int(user_info['token'])
-    past_score = int(user_info['score'])
+    past_token = int(user_info[2])
 
-    print past_token, past_score
+    print past_token
 
     new_token = int(json_data['token'])
-    new_score = int(json_data['score'])
 
     token =  new_token + past_token
-    score =  new_score + past_score
     cursor3 = connection.cursor()
     cursor3.execute(" UPDATE Users"
-                    " SET token = %d, score = %d"
+                    " SET token = %d"
                     " WHERE u_id = %d;",
-                    (token, score, user_id))
+                    (token, user_id))
 
-    print token, score
+    print token
     result = {}
 
     print("Success!")
