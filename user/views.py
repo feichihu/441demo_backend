@@ -223,6 +223,9 @@ def update_all(request):
     cursor1.execute(" SELECT * FROM "
                     " Users WHERE u_id = %d;"
                     (user_id, ))
+
+    print "2"
+
     user_info = cursor1.fetchall()[0]
     past_token = int(user_info['token'])
     past_score = int(user_info['score'])
@@ -289,7 +292,7 @@ def Search_song(request):
     u_id = json_data['u_id']
     songtime = json_data['sing_time']
 
-    result = {};
+    result = {}
 
     sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
