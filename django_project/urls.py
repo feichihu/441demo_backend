@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^adduser/$', views.adduser, name='adduser'),
     url(r'^updatename/$', views.updatename, name='updatename'),
     url(r'^addfriend/$', views.addfriend, name='addfriend'),
+    url(r'^deletepending/$', views.delete_pending, name='deletepending'),
     url(r'^updatescore/$', views.update_all, name='updatescore'),
     url(r'^updatelink/$', views.Update_Link, name='updatelink'),
     url(r'^searchsong/$', views.Search_song, name='searchsong'),

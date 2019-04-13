@@ -208,6 +208,22 @@ def addfriend(request):
     return JsonResponse({})
 
 
+# curl -X POST --header "Content-Type: application/json
+# --data '{"u1_id": 3, "u2_id": 4}'
+# http://localhost:9000/deletepending/
+@csrf_exempt
+def delete_pending(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    user1 = json_data['u1_id']
+    user2 = json_data['u2_id']
+    cursor = connection.cursor()
+    toExecute = "DELETE FROM friends WHERE u1_id = " + str(user1) + "and u2_id = " + str(user2) + ";"
+    cursor.execute(toExecute)
+    return JsonResponse({})
+
+
 #Table:
 #u_id, time, score, link, song_name
 # Post: ["u_id":  "token": ?]
