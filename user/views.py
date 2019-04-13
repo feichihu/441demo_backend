@@ -226,6 +226,9 @@ def update_all(request):
     print "2"
 
     user_info = cursor1.fetchall()[0]
+
+    print user_info
+
     past_token = int(user_info['token'])
     past_score = int(user_info['score'])
 
