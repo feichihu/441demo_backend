@@ -295,7 +295,7 @@ def Update_Link(request):
 
     cursor = connection.cursor()
 
-    print 'INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (' +str(u_id)+', '+str(sing_time)+', '+str(score)+', '+str(link)+', '+str(song_name)+');'
+    print 'INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (' +str(u_id)+', "'+str(sing_time)+'", '+str(score)+', "'+str(link)+'", "'+str(song_name)+'");'
     cursor.execute('INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (' +str(u_id)+', '+str(sing_time)+', '+str(score)+', '+str(link)+', '+str(song_name)+');' )
     result = {}
 
