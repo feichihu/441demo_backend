@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
+import arrow
 
 # Return user information.
 # This is for user profile page.
@@ -220,9 +221,7 @@ def update_all(request):
     print "1"
 
     cursor1 = connection.cursor()
-    cursor1.execute(" SELECT * FROM "
-                    " Users WHERE u_id = %d;"
-                    (user_id, ))
+    cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(user_id) + ";")
 
     print "2"
 
@@ -297,9 +296,7 @@ def Search_song(request):
     sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
     cursor1 = connection.cursor()
-    cursor1.execute(" SELECT * FROM "
-                    " Users WHERE u_id = %d and sing_time = %s;"
-                    (user_id, sing_time))
+    cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " and sing_time = " + str(sing_time) + ";")
     user_info = cursor1.fetchall()
     if(not user_info):
         return JsonResponse(result)
