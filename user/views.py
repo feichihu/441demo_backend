@@ -209,11 +209,6 @@ def addfriend(request):
     return JsonResponse({})
 
 
-<<<<<<< Updated upstream
-# curl -X POST --header "Content-Type: application/json
-# --data '{"u1_id": 3, "u2_id": 4}'
-# http://localhost:9000/deletepending/
-=======
 # curl -X POST --header "Content-Type: application/json"
 # --data '{"wantFollower": 3, "beFollowed": 4}'
 # http://localhost:9000/addpending/
@@ -231,7 +226,6 @@ def addpending(request):
 
 
 # Post: ["token": ?, "score": ?, "date": ? ]
->>>>>>> Stashed changes
 @csrf_exempt
 def delete_pending(request):
     if request.method != 'POST':
