@@ -285,21 +285,14 @@ def Update_Link(request):
     sing_time = arrow.get(sing_time, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
 
-    print "1"
-
     score = int(json_data['score'])
     link = json_data['link']
     song_name = json_data['song_name']
 
-    print "2"
-
     cursor = connection.cursor()
-
-    print "INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (" +str(u_id)+", '"+str(sing_time)+"', "+str(score)+", '"+str(link)+"', '"+str(song_name)+"');"
     cursor.execute("INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (" +str(u_id)+", '"+str(sing_time)+"', "+str(score)+", '"+str(link)+"', '"+str(song_name)+"');" )
     result = {}
 
-    print "Success!"
     return JsonResponse(result)
 
 
@@ -325,6 +318,8 @@ def Search_song(request):
 
     result = {}
 
+    print "1"
+
     sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
     cursor1 = connection.cursor()
@@ -333,8 +328,12 @@ def Search_song(request):
     if(not user_info):
         return JsonResponse(result)
 
+    print "2"
+
     user_info = cursor1.fetchall()[0]
     link = user_info['link']
 
     result['link'] = link
+
+    print result
     return JsonResponse(result)
