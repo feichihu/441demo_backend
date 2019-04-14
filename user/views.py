@@ -111,7 +111,7 @@ def getfriends(request, user_id):
         friend_info['username'] = f_info[1]
         friend_info['img_id'] = f_info[3]
         cursor4 = connection.cursor()
-        cursor4.execute('SELECT album_name FROM songs ' +
+        cursor4.execute('SELECT song_name FROM songs ' +
                         'WHERE score = ( SELECT max(score) FROM songs )')
         f_song_info = cursor4.fetchone()
 
@@ -364,12 +364,12 @@ def Search_song(request):
 
     print "2"
 
-    user_info = cursor1.fetchall()[0]
+    user_info = user_info[0]
 
     print user_info
     link = user_info[3]
 
-    result[3] = link
+    result['link'] = link
 
     print result
     return JsonResponse(result)
