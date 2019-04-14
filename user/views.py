@@ -75,13 +75,15 @@ def search_user(request):
 #             'u_id': 2,
 #             'username': 'jhe',
 #             'img_id': 5,
-#             'best_song': 'love story'
+#             'best_song': 'love story',
+#             'link': 'google.com'
 #         },
 #         {
 #             'u_id': 3,
 #             'username': 'cmm',
 #             'img_id': 8,
-#             'best_song': 'in the name of father'
+#             'best_song': 'in the name of father',
+#             'link': 'google.com'
 #         }
 #     ]
 # }
@@ -111,11 +113,17 @@ def getfriends(request, user_id):
         friend_info['username'] = f_info[1]
         friend_info['img_id'] = f_info[3]
         cursor4 = connection.cursor()
-        cursor4.execute('SELECT song_name FROM songs ' +
-                        'WHERE score = ( SELECT max(score) FROM songs )')
-        f_song_info = cursor4.fetchone()
+        cursor4.execute('SELECT * FROM songs ' +
+                        'WHERE u_id =' + str(f_id) + ';')
+        f_song_info = cursor4.fetchall()
 
-        friend_info['best_song'] = f_song_info[0]
+        max_score = 0
+        for item in f_song_info:
+            if item[2] > max_score:
+                max_score = item[2]
+                friend_info['best_song'] = item[4]
+                friend_info['link'] = item[3]
+
         result['friends'].append(friend_info)
 
     return JsonResponse(result)
