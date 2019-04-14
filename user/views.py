@@ -204,6 +204,7 @@ def addfriend(request):
         user1 = temp
     cursor = connection.cursor()
     deleteExecute = "DELETE FROM pending_friends WHERE u1_id = " + str(user2) + "and u2_id = " + str(user1) + ";"
+    cursor.execute(deleteExecute)
     toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
     cursor.execute(toExecute)
     return JsonResponse({})
