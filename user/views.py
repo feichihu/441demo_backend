@@ -314,17 +314,10 @@ def Search_song(request):
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
     u_id = json_data['u_id']
-    songtime = json_data['sing_time']
+    sing_time = json_data['sing_time']
 
     result = {}
 
-    print "1"
-
-    sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
-
-    print songtime, sing_time
-
-    sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
     cursor1 = connection.cursor()
     cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " and sing_time = " + str(sing_time) + ";")
     user_info = cursor1.fetchall()
@@ -334,9 +327,11 @@ def Search_song(request):
     print "2"
 
     user_info = cursor1.fetchall()[0]
-    link = user_info['link']
 
-    result['link'] = link
+    print user_info
+    link = user_info[3]
+
+    result[3] = link
 
     print result
     return JsonResponse(result)
