@@ -38,7 +38,7 @@ def getuser(request, user_id):
 # This is for search bar.
 # curl -X POST --header "Content-Type: application/json" 
 # --data '{"username":"qyao"}'
-# http:localhost:9000/searchuser/
+# http://localhost:9000/searchuser/
 # return json is like:
 # {
 #     u_id: 1,
