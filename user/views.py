@@ -188,7 +188,7 @@ def updatename(request):
     return JsonResponse({})
 
 
-# curl -X POST --header "Content-Type: application/json"
+# curl -X POST --header "Content-Type: application/json" --data '{"wantFollower": 2, "beFollowed": 4}' http://localhost:9000/addfriend/
 # --data '{"wantFollower": 3, "beFollowed": 4}'
 # http://localhost:9000/updatename/
 @csrf_exempt
@@ -203,7 +203,7 @@ def addfriend(request):
         user2 = user1
         user1 = temp
     cursor = connection.cursor()
-    deleteExecute = "DELETE FROM pending_friends (u1_id, u2_id) WHERE u1_id = '" + str(user2) + "';"
+    deleteExecute = "DELETE FROM pending_friends WHERE u1_id = " + str(user2) + "and u2_id = " + str(user1) + ";"
     toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
     cursor.execute(toExecute)
     return JsonResponse({})
@@ -234,7 +234,7 @@ def delete_pending(request):
     user1 = json_data['u1_id']
     user2 = json_data['u2_id']
     cursor = connection.cursor()
-    toExecute = "DELETE FROM friends WHERE u1_id = " + str(user1) + "and u2_id = " + str(user2) + ";"
+    toExecute = "DELETE FROM pending_friends WHERE u1_id = " + str(user1) + "and u2_id = " + str(user2) + ";"
     cursor.execute(toExecute)
     return JsonResponse({})
 
