@@ -321,6 +321,9 @@ def Search_song(request):
     print "1"
 
     sing_time = arrow.get(songtime, 'YYYY-MM-DD HH:mm:ss')
+
+    print songtime, sing_time
+
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
     cursor1 = connection.cursor()
     cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " and sing_time = " + str(sing_time) + ";")
