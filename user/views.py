@@ -333,7 +333,7 @@ def Search_song(request):
 
     print "2"
 
-    user_info = cursor1.fetchall()[0]
+    user_info = user_info[0]
 
     print user_info
     link = user_info[3]
