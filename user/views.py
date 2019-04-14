@@ -321,6 +321,8 @@ def Search_song(request):
     print "1"
 
     cursor1 = connection.cursor()
+
+    print " SELECT * FROM Users WHERE u_id = " + str(u_id) + " AND sing_time = '" + str(sing_time) + "';"
     cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " AND sing_time = '" + str(sing_time) + "';")
 
     print "23333"
