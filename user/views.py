@@ -369,7 +369,7 @@ def Search_song(request):
     print user_info
     link = user_info[3]
 
-    result[3] = link
+    result['link'] = link
 
     print result
     return JsonResponse(result)
