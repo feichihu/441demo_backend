@@ -318,8 +318,10 @@ def Search_song(request):
 
     result = {}
 
+    print "1"
+
     cursor1 = connection.cursor()
-    cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " and sing_time = " + str(sing_time) + ";")
+    cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(u_id) + " and sing_time = '" + str(sing_time) + "';")
     user_info = cursor1.fetchall()
     if(not user_info):
         return JsonResponse(result)
