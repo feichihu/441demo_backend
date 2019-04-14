@@ -33,6 +33,37 @@ def getuser(request, user_id):
     result['level'] = return_data[4]
     return JsonResponse(result)
 
+
+# Return user information.
+# This is for search bar.
+# curl -X POST --header "Content-Type: application/json" 
+# --data '{"username":"qyao"}'
+# http:localhost:9000/searchuser/
+# return json is like:
+# {
+#     u_id: 1,
+#     username: llw,
+#     img_id: 1,
+#     token: 100,
+#     level: 1 
+# }
+def search_user(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    username = json_data['username']
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM Users WHERE username = ' + username + ';')
+    return_data = cursor.fetchone()
+    result = {}
+    result['u_id'] = return_data[0]
+    result['username'] = return_data[1]
+    result['img_id'] = return_data[2]
+    result['token'] = return_data[3]
+    result['level'] = return_data[4]
+    return JsonResponse(result)
+
+
 # Return user friends information.
 # This is for user profile page.
 # Input http:hostname/profile/friends/1
@@ -153,7 +184,7 @@ def addchatt(request):
 
 # curl -X POST --header "Content-Type: application/json" 
 # --data '{"username":"qyao", "img_id": 2}'
-# http://localhost:9000/adduser/
+# http:localhost:9000/adduser/
 @csrf_exempt
 def adduser(request):
     if request.method != 'POST':
