@@ -53,7 +53,7 @@ def search_user(request):
     json_data = json.loads(request.body)
     username = json_data['username']
     cursor = connection.cursor()
-    cursor.execute('SELECT * FROM Users WHERE username = ' + username + ';')
+    cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     return_data = cursor.fetchone()
     result = {}
     result['u_id'] = return_data[0]
