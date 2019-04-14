@@ -47,6 +47,7 @@ def getuser(request, user_id):
 #     token: 100,
 #     level: 1 
 # }
+@csrf_exempt
 def search_user(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
