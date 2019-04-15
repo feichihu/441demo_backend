@@ -78,7 +78,7 @@ def search_user(request, user_id):
     cursor2 = connection.cursor()
     rows_count2 = cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
                     ' and u2_id = ' + str(user_id) + ';')
-    if rows_count1 + rows_count2 > 0:
+    if rows_count1 != None or rows_count2 != None:
         result['friend_status'] = 'f'
 
     cursor3 = connection.cursor()
@@ -87,7 +87,7 @@ def search_user(request, user_id):
     cursor4 = connection.cursor()
     rows_count4 = cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
                     ' and u2_id = ' + str(user_id) + ';')
-    if rows_count3 + rows_count4 > 0:
+    if rows_count3 != None or rows_count4 != None:
         result['friend_status'] = 'p'
 
     return JsonResponse(result)
