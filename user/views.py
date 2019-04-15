@@ -110,7 +110,7 @@ def getfriends(request, user_id):
         cursor3.execute('SELECT * FROM users WHERE u_id = ' + str(f_id) + ';')
         f_info = cursor3.fetchone()
 
-
+        friend_info['u_id'] = f_info[0]
         friend_info['username'] = f_info[1]
         friend_info['img_id'] = f_info[3]
         cursor4 = connection.cursor()
@@ -118,6 +118,8 @@ def getfriends(request, user_id):
                         'WHERE u_id =' + str(f_id) + ';')
         f_song_info = cursor4.fetchall()
 
+        friend_info['best_song'] = ''
+        friend_info['link'] = ''
         max_score = 0
         for item in f_song_info:
             if item[2] > max_score:
