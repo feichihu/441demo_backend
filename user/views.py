@@ -253,6 +253,53 @@ def addfriend(request):
     return JsonResponse({})
 
 
+# Return pending friends information of <user_id>.
+# This is for user pending friends page.
+# Input: http:hostname/getpending/{user_id}/
+# e.g. if user 2 and user 3 sent friend request to 1,
+# curl http:hostname/getpending/1/
+# would return
+# {
+#     'pending_friends':
+#     [
+#         {
+#             'u_id': 2,
+#             'username': 'jhe',
+#             'img_id': 5,
+#			  'token': 10000
+#         },
+#         {
+#             'u_id': 3,
+#             'username': 'cmm',
+#             'img_id': 8
+#			  'token': 20000
+#         }
+#     ]
+# }
+def getpending(request, user_id):
+    if request.method != 'GET':
+        return HttpResponse(status=404)
+
+    result = {'pending_friends': []}
+    cursor1 = connection.cursor()
+    cursor1.execute('SELECT * FROM Pending_friends WHERE u1_id = ' + str(user_id) + ';')
+    pending_friends = cursor1.fetchall()
+    pending_friends = [i[1] for i in pending_friends]
+
+    for pf_id in pending_friends:
+    	pfriend_info = {}
+    	cursor = connection.cursor()
+    	cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(pf_id) + ';')
+    	pf_info = cursor.fetchone()
+        pfriend_info['u_id'] = pf_id
+        pfriend_info['username'] = pf_info[1]
+        pfriend_info['token'] = pf_info[2]
+        pfriend_info['img_id'] = pf_info[3]
+        result['pending_friends'].append(pfriend_info)
+
+    return JsonResponse(result)
+
+
 # curl -X POST --header "Content-Type: application/json"
 # --data '{"wantFollower": 3, "beFollowed": 4}'
 # http://localhost:9000/addpending/
