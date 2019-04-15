@@ -159,10 +159,11 @@ def getleaderboard(request, user_id):
         rank += 1
         the_row = {}
         the_row['rank'] = rank
-        the_row['img_id'] = item[3]
+        the_id = item[0]
+        the_row['u_id'] = the_id
         the_row['username'] = item[1]
         the_row['token'] = item[2]
-        the_id = item[0]
+        the_row['img_id'] = item[3]
         cursor2 = connection.cursor()
         if the_id < int(user_id):
             the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;'
