@@ -38,15 +38,21 @@ def getuser(request, user_id):
 # This is for search bar.
 # curl -X POST --header "Content-Type: application/json" 
 # --data '{"username":"qyao"}'
-# http://localhost:9000/searchuser/
+# http://localhost:9000/searchuser/{user_id}
 # return json is like:
 # {
-#     u_id: 1,
-#     username: llw,
-#     img_id: 1,
+#     u_id: 8,
+#     username: 'qyao',
+#     img_id: 2,
 #     token: 100,
-#     level: 1 
+#     level: 1,
+#     friend_status: 'n';
 # }
+# there are three options for friend_status:
+# 'f': friends
+# 'n': not friends
+# 'p': pending friends, either i have sent request to this user,
+# or this user has sent request to me.
 @csrf_exempt
 def search_user(request):
     if request.method != 'POST':
@@ -57,11 +63,33 @@ def search_user(request):
     cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     return_data = cursor.fetchone()
     result = {}
-    result['u_id'] = return_data[0]
+    the_id = return_data[0]
+    result['u_id'] = the_id
     result['username'] = return_data[1]
     result['img_id'] = return_data[2]
     result['token'] = return_data[3]
     result['level'] = return_data[4]
+
+    result['friend_status'] = 'n'
+
+    cursor1 = connection.cursor()
+    rows_count1 = cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
+                    ' and u2_id = ' + str(the_id) + ';')
+    cursor2 = connection.cursor()
+    rows_count2 = cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
+                    ' and u2_id = ' + str(user_id) + ';')
+    if rows_count1 + rows_count2 > 0:
+        result['friend_status'] = 'f'
+
+    cursor3 = connection.cursor()
+    rows_count3 = cursor3.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(user_id) +
+                    ' and u2_id = ' + str(the_id) + ';')
+    cursor4 = connection.cursor()
+    rows_count4 = cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
+                    ' and u2_id = ' + str(user_id) + ';')
+    if rows_count3 + rows_count4 > 0:
+        result['friend_status'] = 'p'
+
     return JsonResponse(result)
 
 
@@ -266,13 +294,13 @@ def addfriend(request):
 #             'u_id': 2,
 #             'username': 'jhe',
 #             'img_id': 5,
-#			  'token': 10000
+#             'token': 10000
 #         },
 #         {
 #             'u_id': 3,
 #             'username': 'cmm',
 #             'img_id': 8
-#			  'token': 20000
+#             'token': 20000
 #         }
 #     ]
 # }
@@ -287,10 +315,10 @@ def getpending(request, user_id):
     pending_friends = [i[1] for i in pending_friends]
 
     for pf_id in pending_friends:
-    	pfriend_info = {}
-    	cursor = connection.cursor()
-    	cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(pf_id) + ';')
-    	pf_info = cursor.fetchone()
+        pfriend_info = {}
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(pf_id) + ';')
+        pf_info = cursor.fetchone()
         pfriend_info['u_id'] = pf_id
         pfriend_info['username'] = pf_info[1]
         pfriend_info['token'] = pf_info[2]
