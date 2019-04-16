@@ -34,18 +34,6 @@ def getuser(request, user_id):
     return JsonResponse(result)
 
 
-@csrf_exempt
-def searchuser(request):
-    if request.method != 'POST':
-        return HttpResponse(status=404)
-    json_data = json.loads(request.body)
-    wantFollower = json_data['wantFollower']
-    beFollowed = json_data['beFollowed']
-    cursor = connection.cursor()
-    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
-    cursor.execute(toExecute)
-    return JsonResponse({})
-
 # Return user information.
 # This is for search bar.
 # curl -X POST --header "Content-Type: application/json" 
@@ -349,6 +337,19 @@ def getpending(request, user_id):
         result['pending_friends'].append(pfriend_info)
 
     return JsonResponse(result)
+
+
+@csrf_exempt
+def test(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    wantFollower = json_data['wantFollower']
+    beFollowed = json_data['beFollowed']
+    cursor = connection.cursor()
+    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
+    cursor.execute(toExecute)
+    return JsonResponse({})
 
 
 # curl -X POST --header "Content-Type: application/json"
