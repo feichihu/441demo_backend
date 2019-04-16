@@ -34,6 +34,18 @@ def getuser(request, user_id):
     return JsonResponse(result)
 
 
+@csrf_exempt
+def search_user(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    wantFollower = json_data['wantFollower']
+    beFollowed = json_data['beFollowed']
+    cursor = connection.cursor()
+    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
+    cursor.execute(toExecute)
+    return JsonResponse({})
+
 # Return user information.
 # This is for search bar.
 # curl -X POST --header "Content-Type: application/json" 
@@ -53,10 +65,10 @@ def getuser(request, user_id):
 # 'n': not friends
 # 'p': pending friends, either i have sent request to this user,
 # or this user has sent request to me.
-@csrf_exempt
-def search_user(request):
-	result = {}
-	return JsonResponse(result)
+# @csrf_exempt
+# def search_user(request):
+# 	result = {}
+# 	return JsonResponse(result)
     # if request.method != 'POST':
     #     return HttpResponse(status=404)
     # json_data = json.loads(request.body)
