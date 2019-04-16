@@ -55,6 +55,7 @@ def getuser(request, user_id):
 # or this user has sent request to me.
 @csrf_exempt
 def search_user(request):
+	result = {}
 	return JsonResponse(result)
     # if request.method != 'POST':
     #     return HttpResponse(status=404)
@@ -66,7 +67,7 @@ def search_user(request):
     # cursor = connection.cursor()
     # cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     # return_data = cursor.fetchone()
-    # result = {}
+
     # the_id = return_data[0]
     # result['u_id'] = the_id
     # result['username'] = return_data[1]
