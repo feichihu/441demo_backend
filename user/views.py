@@ -55,17 +55,18 @@ def getuser(request, user_id):
 # or this user has sent request to me.
 @csrf_exempt
 def search_user(request):
-    if request.method != 'POST':
-        return HttpResponse(status=404)
-    json_data = json.loads(request.body)
-    username = json_data['username']
+	return JsonResponse(result)
+    # if request.method != 'POST':
+    #     return HttpResponse(status=404)
+    # json_data = json.loads(request.body)
+    # username = json_data['username']
 
-    self_u_id = json_data['self_u_id']
-    
+    # self_u_id = json_data['self_u_id']
+
     # cursor = connection.cursor()
     # cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     # return_data = cursor.fetchone()
-    result = {}
+    # result = {}
     # the_id = return_data[0]
     # result['u_id'] = the_id
     # result['username'] = return_data[1]
@@ -73,9 +74,9 @@ def search_user(request):
     # result['token'] = return_data[3]
     # result['level'] = return_data[4]
 
-    result['friend_status'] = 'n'
+    # result['friend_status'] = 'n'
 
-    return JsonResponse(result)
+    # return JsonResponse(result)
 
     # cursor1 = connection.cursor()
     # cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
