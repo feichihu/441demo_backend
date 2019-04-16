@@ -62,16 +62,16 @@ def search_user(request):
 
     self_u_id = json_data['self_u_id']
     
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
-    return_data = cursor.fetchone()
+    # cursor = connection.cursor()
+    # cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
+    # return_data = cursor.fetchone()
     result = {}
-    the_id = return_data[0]
-    result['u_id'] = the_id
-    result['username'] = return_data[1]
-    result['img_id'] = return_data[2]
-    result['token'] = return_data[3]
-    result['level'] = return_data[4]
+    # the_id = return_data[0]
+    # result['u_id'] = the_id
+    # result['username'] = return_data[1]
+    # result['img_id'] = return_data[2]
+    # result['token'] = return_data[3]
+    # result['level'] = return_data[4]
 
     result['friend_status'] = 'n'
 
