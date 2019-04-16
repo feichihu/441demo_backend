@@ -54,11 +54,14 @@ def getuser(request, user_id):
 # 'p': pending friends, either i have sent request to this user,
 # or this user has sent request to me.
 @csrf_exempt
-def search_user(request, user_id):
+def search_user(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
     username = json_data['username']
+
+    self_u_id = json_data['self_u_id']
+    
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     return_data = cursor.fetchone()
