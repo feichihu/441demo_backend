@@ -75,27 +75,27 @@ def search_user(request):
 
     result['friend_status'] = 'n'
 
-    cursor1 = connection.cursor()
-    cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
-                    ' and u2_id = ' + str(the_id) + ';')
-    cursor2 = connection.cursor()
-    cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
-                    ' and u2_id = ' + str(user_id) + ';')
-    row1 = cursor1.fetchone()
-    row2 = cursor2.fetchone()
-    if row1 != None or row2 != None:
-        result['friend_status'] = 'f'
+    # cursor1 = connection.cursor()
+    # cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
+    #                 ' and u2_id = ' + str(the_id) + ';')
+    # cursor2 = connection.cursor()
+    # cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
+    #                 ' and u2_id = ' + str(user_id) + ';')
+    # row1 = cursor1.fetchone()
+    # row2 = cursor2.fetchone()
+    # if row1 != None or row2 != None:
+    #     result['friend_status'] = 'f'
 
-    cursor3 = connection.cursor()
-    cursor3.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(user_id) +
-                    ' and u2_id = ' + str(the_id) + ';')
-    cursor4 = connection.cursor()
-    cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
-                    ' and u2_id = ' + str(user_id) + ';')
-    row3 = cursor3.fetchone()
-    row4 = cursor4.fetchone()
-    if row3 != None or row4 != None:
-        result['friend_status'] = 'p'
+    # cursor3 = connection.cursor()
+    # cursor3.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(user_id) +
+    #                 ' and u2_id = ' + str(the_id) + ';')
+    # cursor4 = connection.cursor()
+    # cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
+    #                 ' and u2_id = ' + str(user_id) + ';')
+    # row3 = cursor3.fetchone()
+    # row4 = cursor4.fetchone()
+    # if row3 != None or row4 != None:
+    #     result['friend_status'] = 'p'
 
     return JsonResponse(result)
 
