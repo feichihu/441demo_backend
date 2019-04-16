@@ -37,7 +37,7 @@ def getuser(request, user_id):
 # Return user information.
 # This is for search bar.
 # curl -X POST --header "Content-Type: application/json" 
-# --data '{"username":"qyao"}'
+# --data '{"username":"qyao", "self_u_id":"1"}'
 # http://localhost:9000/searchuser/{user_id}
 # return json is like:
 # {
@@ -60,6 +60,8 @@ def search_user(request):
     result = {}
     json_data = json.loads(request.body)
     username = json_data['username']
+    self_u_id = json_data['self_u_id']
+
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     return_data = cursor.fetchone()
@@ -71,53 +73,31 @@ def search_user(request):
     result['token'] = return_data[3]
     result['level'] = return_data[4]
 
+    result['friend_status'] = 'n'
+
+    cursor1 = connection.cursor()
+    cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
+                    ' and u2_id = ' + str(the_id) + ';')
+    cursor2 = connection.cursor()
+    cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
+                    ' and u2_id = ' + str(user_id) + ';')
+    row1 = cursor1.fetchone()
+    row2 = cursor2.fetchone()
+    if row1 != None or row2 != None:
+        result['friend_status'] = 'f'
+
+    cursor3 = connection.cursor()
+    cursor3.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(user_id) +
+                    ' and u2_id = ' + str(the_id) + ';')
+    cursor4 = connection.cursor()
+    cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
+                    ' and u2_id = ' + str(user_id) + ';')
+    row3 = cursor3.fetchone()
+    row4 = cursor4.fetchone()
+    if row3 != None or row4 != None:
+        result['friend_status'] = 'p'
+
     return JsonResponse(result)
-
-    # if request.method != 'POST':
-    #     return HttpResponse(status=404)
-    # json_data = json.loads(request.body)
-    # username = json_data['username']
-
-    # self_u_id = json_data['self_u_id']
-
-    # cursor = connection.cursor()
-    # cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
-    # return_data = cursor.fetchone()
-
-    # the_id = return_data[0]
-    # result['u_id'] = the_id
-    # result['username'] = return_data[1]
-    # result['img_id'] = return_data[2]
-    # result['token'] = return_data[3]
-    # result['level'] = return_data[4]
-
-    # result['friend_status'] = 'n'
-
-    # return JsonResponse(result)
-
-    # cursor1 = connection.cursor()
-    # cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) +
-    #                 ' and u2_id = ' + str(the_id) + ';')
-    # cursor2 = connection.cursor()
-    # cursor2.execute('SELECT * FROM friends WHERE u1_id = ' + str(the_id) +
-    #                 ' and u2_id = ' + str(user_id) + ';')
-    # row1 = cursor1.fetchone()
-    # row2 = cursor2.fetchone()
-    # if row1 != None or row2 != None:
-    #     result['friend_status'] = 'f'
-
-    # cursor3 = connection.cursor()
-    # cursor3.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(user_id) +
-    #                 ' and u2_id = ' + str(the_id) + ';')
-    # cursor4 = connection.cursor()
-    # cursor4.execute('SELECT * FROM pending_friends WHERE u1_id = ' + str(the_id) +
-    #                 ' and u2_id = ' + str(user_id) + ';')
-    # row3 = cursor3.fetchone()
-    # row4 = cursor4.fetchone()
-    # if row3 != None or row4 != None:
-    #     result['friend_status'] = 'p'
-
-    # return JsonResponse(result)
 
 
 # Return user friends information.
@@ -353,19 +333,6 @@ def getpending(request, user_id):
         result['pending_friends'].append(pfriend_info)
 
     return JsonResponse(result)
-
-
-@csrf_exempt
-def test(request):
-    if request.method != 'POST':
-        return HttpResponse(status=404)
-    json_data = json.loads(request.body)
-    wantFollower = json_data['wantFollower']
-    beFollowed = json_data['beFollowed']
-    cursor = connection.cursor()
-    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
-    cursor.execute(toExecute)
-    return JsonResponse({})
 
 
 # curl -X POST --header "Content-Type: application/json"
