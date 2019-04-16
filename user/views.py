@@ -55,10 +55,10 @@ def getuser(request, user_id):
 # or this user has sent request to me.
 @csrf_exempt
 def search_user(request):
-	if request.method != 'POST':
+    if request.method != 'POST':
         return HttpResponse(status=404)
-	result = {}
-	return JsonResponse(result)
+    result = {}
+    return JsonResponse(result)
     # if request.method != 'POST':
     #     return HttpResponse(status=404)
     # json_data = json.loads(request.body)
