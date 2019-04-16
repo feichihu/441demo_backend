@@ -53,10 +53,12 @@ def getuser(request, user_id):
 # 'n': not friends
 # 'p': pending friends, either i have sent request to this user,
 # or this user has sent request to me.
-# @csrf_exempt
-# def search_user(request):
-# 	result = {}
-# 	return JsonResponse(result)
+@csrf_exempt
+def search_user(request):
+	if request.method != 'POST':
+        return HttpResponse(status=404)
+	result = {}
+	return JsonResponse(result)
     # if request.method != 'POST':
     #     return HttpResponse(status=404)
     # json_data = json.loads(request.body)
