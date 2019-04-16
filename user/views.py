@@ -58,7 +58,20 @@ def search_user(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     result = {}
+    json_data = json.loads(request.body)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
+    return_data = cursor.fetchone()
+
+    the_id = return_data[0]
+    result['u_id'] = the_id
+    result['username'] = return_data[1]
+    result['img_id'] = return_data[2]
+    result['token'] = return_data[3]
+    result['level'] = return_data[4]
+
     return JsonResponse(result)
+
     # if request.method != 'POST':
     #     return HttpResponse(status=404)
     # json_data = json.loads(request.body)
