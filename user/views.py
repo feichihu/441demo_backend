@@ -129,11 +129,11 @@ def getfriends(request, user_id):
 
     result = {'friends': []}
     cursor1 = connection.cursor()
-    cursor1.execute('SELECT * FROM friends WHERE u1_id = ' + str(user_id) + ';')
+    cursor1.execute("SELECT * FROM friends WHERE u1_id = '" + str(user_id) + "';")
     friends1 = cursor1.fetchall()
     friends1 = [i[1] for i in friends1]
     cursor2 = connection.cursor()
-    cursor2.execute('SELECT * FROM friends WHERE u2_id = ' + str(user_id) + ';')
+    cursor2.execute("SELECT * FROM friends WHERE u2_id = '" + str(user_id) + "';")
     friends2 = cursor2.fetchall()
     friends2 = [i[0] for i in friends2]
     friends = friends1 + friends2
@@ -142,15 +142,15 @@ def getfriends(request, user_id):
     for f_id in friends:
         friend_info = {}
         cursor3 = connection.cursor()
-        cursor3.execute('SELECT * FROM users WHERE u_id = ' + str(f_id) + ';')
+        cursor3.execute("SELECT * FROM users WHERE u_id = '" + str(f_id) + "';")
         f_info = cursor3.fetchone()
 
         friend_info['u_id'] = f_info[0]
         friend_info['username'] = f_info[1]
         friend_info['img_id'] = f_info[3]
         cursor4 = connection.cursor()
-        cursor4.execute('SELECT * FROM songs ' +
-                        'WHERE u_id =' + str(f_id) + ';')
+        cursor4.execute("SELECT * FROM songs " +
+                        "WHERE u_id ='" + str(f_id) + "';")
         f_song_info = cursor4.fetchall()
 
         friend_info['best_song'] = ''
