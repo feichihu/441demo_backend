@@ -21,19 +21,19 @@ from user import views
 urlpatterns = [
     # url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	# url(r'^addchatt/$', views.addchatt, name='addchatt'),
-    url(r'^profile/(?P<user_id>[0-9]+)/$', views.getuser, name='getuser'),
-    url(r'^leaderboard/(?P<user_id>[0-9]+)/$', views.getleaderboard, name='getleaderboard'),
+    url(r'^profile/(?P<user_id>\w+)/$', views.getuser, name='getuser'),
+    url(r'^leaderboard/(?P<user_id>\w+)/$', views.getleaderboard, name='getleaderboard'),
     url(r'^adduser/$', views.adduser, name='adduser'),
     url(r'^updatename/$', views.updatename, name='updatename'),
     url(r'^addfriend/$', views.addfriend, name='addfriend'),
     url(r'^deletepending/$', views.delete_pending, name='deletepending'),
-    url(r'^getpending/(?P<user_id>[0-9]+)/$', views.getpending, name='getpending'),
+    url(r'^getpending/(?P<user_id>\w+)/$', views.getpending, name='getpending'),
     url(r'^updatescore/$', views.update_all, name='updatescore'),
     url(r'^updatelink/$', views.Update_Link, name='updatelink'),
     url(r'^searchsong/$', views.Search_song, name='searchsong'),
     url(r'^addpending/$', views.addpending, name='addpending'),
     url(r'^searchuser/$', views.search_user, name='searchuser'),
-    url(r'^profile/friends/(?P<user_id>[0-9]+)/$', views.getfriends, name='getfriends'),
+    url(r'^profile/friends/(?P<user_id>\w+)/$', views.getfriends, name='getfriends'),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
