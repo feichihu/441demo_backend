@@ -24,6 +24,7 @@ def getuser(request, user_id):
         return HttpResponse(status=404)
     cursor = connection.cursor()
     toExecute = "SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';"
+    print(toExecute)
     cursor.execute(toExecute)
     return_data = cursor.fetchone()
     print(return_data)
