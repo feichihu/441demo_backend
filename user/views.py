@@ -250,7 +250,7 @@ def adduser(request):
     if return_data:
         return JsonResponse({})
     cursor = connection.cursor()
-    toExecute = "INSERT OR IGNORE INTO users (u_id, username, token, img_id, level) VALUES ('" + str(u_id) + "', '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
+    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES ('" + str(u_id) + "', '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
     cursor.execute(toExecute)
     return JsonResponse({})
 
