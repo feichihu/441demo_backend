@@ -247,6 +247,7 @@ def adduser(request):
     cursorid = connection.cursor()
     cursorid.execute("SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';")
     return_data = cursorid.fetchone()
+    print(return_data)
     if return_data:
         return JsonResponse({})
     cursor = connection.cursor()
