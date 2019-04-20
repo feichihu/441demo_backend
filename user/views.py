@@ -403,7 +403,7 @@ def Update_Link(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     json_data = json.loads(request.body)
-    u_id = int(json_data['u_id'])
+    u_id = json_data['u_id']
     sing_time = json_data['sing_time']
     sing_time = arrow.get(sing_time, 'YYYY-MM-DD HH:mm:ss')
     sing_time = sing_time.format('YYYY-MM-DD HH:mm:ss')
