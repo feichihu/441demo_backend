@@ -281,14 +281,13 @@ def addfriend(request):
     json_data = json.loads(request.body)
     user1 = json_data['wantFollower']
     user2 = json_data['beFollowed']
-    if int(user1) > int(user2):
+    cursor = connection.cursor()
+    deleteExecute = "DELETE FROM pending_friends WHERE u1_id = '" + str(user2) + "' and u2_id = '" + str(user1) + "';"
+    cursor.execute(deleteExecute)
+    if user1 > user2:
         temp = user2
         user2 = user1
         user1 = temp
-    cursor = connection.cursor()
-    deleteExecute = "DELETE FROM pending_friends WHERE u1_id = '" + str(user2) + "' and u2_id = '" + str(user1) + "';"
-    print(deleteExecute)
-    cursor.execute(deleteExecute)
     toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES ('" + str(user1) + "', '" + str(user2) + "');"
     cursor.execute(toExecute)
     return JsonResponse({})
