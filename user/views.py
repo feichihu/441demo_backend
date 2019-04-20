@@ -233,9 +233,9 @@ def addchatt(request):
     return JsonResponse({})
 
 
-# curl -X POST --header "Content-Type: application/json" 
+# curl -X POST --header "Content-Type: application/json"
 # --data '{"u_id": "1234", username":"qq", "img_id": 2}'
-# http:localhost:9000/adduser/
+# http://localhost:9000/adduser/
 @csrf_exempt
 def adduser(request):
     if request.method != 'POST':
@@ -247,6 +247,7 @@ def adduser(request):
     return_data = cursorid.fetchone()
     cursor = connection.cursor()
     toExecute = "INSERT IGNORE INTO users (u_id, username, token, img_id, level) VALUES ('" + str(u_id) + "', '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
+    print(toExecute)
     cursor.execute(toExecute)
     return JsonResponse({})
 
