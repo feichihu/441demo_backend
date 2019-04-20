@@ -21,7 +21,7 @@ from user import views
 urlpatterns = [
     # url(r'^getchatts/$', views.getchatts, name='getchatts'),
 	# url(r'^addchatt/$', views.addchatt, name='addchatt'),
-    url(r'^profile/(?P<user_id>[-\w]+)/$', views.getuser, name='getuser'),
+    url(r'^profile/(?P<user_id>[\w-]+)/$', views.getuser, name='getuser'),
     url(r'^leaderboard/(?P<user_id>[-\w]+)/$', views.getleaderboard, name='getleaderboard'),
     url(r'^adduser/$', views.adduser, name='adduser'),
     url(r'^updatename/$', views.updatename, name='updatename'),
