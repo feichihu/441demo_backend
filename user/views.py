@@ -67,6 +67,9 @@ def search_user(request):
     cursor.execute("SELECT * FROM Users WHERE username = '" + username + "';")
     return_data = cursor.fetchone()
 
+    if not return_data:
+        return JsonResponse({})
+
     the_id = return_data[0]
     result['u_id'] = the_id
     result['username'] = return_data[1]
