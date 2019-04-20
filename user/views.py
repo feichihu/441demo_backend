@@ -351,7 +351,7 @@ def addpending(request):
     wantFollower = json_data['wantFollower']
     beFollowed = json_data['beFollowed']
     cursor = connection.cursor()
-    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES ('" + str(beFollowed) + "', '" + str(wantFollower) + ");"
+    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES ('" + str(beFollowed) + "', '" + str(wantFollower) + "');"
     cursor.execute(toExecute)
     return JsonResponse({})
 
