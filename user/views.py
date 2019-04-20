@@ -246,6 +246,7 @@ def adduser(request):
     img_id = json_data['img_id']
     cursor = connection.cursor()
     toExecute = "INSERT IGNORE INTO users (u_id, username, token, img_id, level) VALUES ('" + str(u_id) + "', '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
+    print(toExecute)
     cursor.execute(toExecute)
     return JsonResponse({})
 
