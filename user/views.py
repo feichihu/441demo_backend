@@ -23,7 +23,8 @@ def getuser(request, user_id):
     if request.method != 'GET':
         return HttpResponse(status=404)
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';")
+    toExecute = "SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';"
+    cursor.execute(toExecute)
     return_data = cursor.fetchone()
     print(return_data)
     result = {}
@@ -202,10 +203,10 @@ def getleaderboard(request, user_id):
         the_row['img_id'] = item[3]
         cursor2 = connection.cursor()
         if the_id < int(user_id):
-            the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(the_id) + ' AND u2_id = ' + str(user_id) + ' ;'
+            the_string = "SELECT * FROM Friends WHERE u1_id = '" + str(the_id) + "' AND u2_id = '" + str(user_id) + "' ;"
             cursor2.execute(the_string)
         else:
-            the_string = 'SELECT * FROM Friends WHERE u1_id = ' + str(user_id) + ' AND u2_id = ' + str(the_id) + ' ;'
+            the_string = "SELECT * FROM Friends WHERE u1_id = '" + str(user_id) + "' AND u2_id = '" + str(the_id) + "' ;"
             cursor2.execute(the_string)
         rd = cursor2.fetchall()
         if rd:
@@ -246,7 +247,7 @@ def adduser(request):
     ID = int(return_data[0])
     ID += 1
     cursor = connection.cursor()
-    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES (" + str(ID) + ", '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
+    toExecute = "INSERT INTO users (u_id, username, token, img_id, level) VALUES ('" + str(ID) + "', '" + str(username) + "', " + str(0) + ", " + str(img_id) + ", 1);"
     cursor.execute(toExecute)
     return JsonResponse({})
 
@@ -262,7 +263,7 @@ def updatename(request):
     u_id = json_data['u_id']
     username = json_data['username']
     cursor = connection.cursor()
-    toExecute = "UPDATE users SET username = '" + str(username) + "' WHERE u_id = " + str(u_id) + ";"
+    toExecute = "UPDATE users SET username = '" + str(username) + "' WHERE u_id = '" + str(u_id) + "';"
     cursor.execute(toExecute)
     return JsonResponse({})
 
@@ -282,9 +283,9 @@ def addfriend(request):
         user2 = user1
         user1 = temp
     cursor = connection.cursor()
-    deleteExecute = "DELETE FROM pending_friends WHERE u1_id = " + str(user2) + "and u2_id = " + str(user1) + ";"
+    deleteExecute = "DELETE FROM pending_friends WHERE u1_id = '" + str(user2) + "' and u2_id = '" + str(user1) + "';"
     cursor.execute(deleteExecute)
-    toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES (" + str(user1) + ", " + str(user2) + ");"
+    toExecute = "INSERT INTO friends (u1_id, u2_id) VALUES ('" + str(user1) + "', '" + str(user2) + "');"
     cursor.execute(toExecute)
     return JsonResponse({})
 
@@ -318,14 +319,14 @@ def getpending(request, user_id):
 
     result = {'pending_friends': []}
     cursor1 = connection.cursor()
-    cursor1.execute('SELECT * FROM Pending_friends WHERE u1_id = ' + str(user_id) + ';')
+    cursor1.execute("SELECT * FROM Pending_friends WHERE u1_id = '" + str(user_id) + "';")
     pending_friends = cursor1.fetchall()
     pending_friends = [i[1] for i in pending_friends]
 
     for pf_id in pending_friends:
         pfriend_info = {}
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM Users WHERE u_id = ' + str(pf_id) + ';')
+        cursor.execute("SELECT * FROM Users WHERE u_id = '" + str(pf_id) + "';")
         pf_info = cursor.fetchone()
         pfriend_info['u_id'] = pf_id
         pfriend_info['username'] = pf_info[1]
@@ -347,7 +348,7 @@ def addpending(request):
     wantFollower = json_data['wantFollower']
     beFollowed = json_data['beFollowed']
     cursor = connection.cursor()
-    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES (" + str(beFollowed) + ", " + str(wantFollower) + ");"
+    toExecute = "INSERT INTO pending_friends (u1_id, u2_id) VALUES ('" + str(beFollowed) + "', '" + str(wantFollower) + ");"
     cursor.execute(toExecute)
     return JsonResponse({})
 
@@ -361,7 +362,7 @@ def delete_pending(request):
     user1 = json_data['u1_id']
     user2 = json_data['u2_id']
     cursor = connection.cursor()
-    toExecute = "DELETE FROM pending_friends WHERE u1_id = " + str(user1) + "and u2_id = " + str(user2) + ";"
+    toExecute = "DELETE FROM pending_friends WHERE u1_id = '" + str(user1) + "' and u2_id = '" + str(user2) + "';"
     cursor.execute(toExecute)
     return JsonResponse({})
 
@@ -379,7 +380,7 @@ def update_all(request):
     print "1"
 
     cursor1 = connection.cursor()
-    cursor1.execute(" SELECT * FROM Users WHERE u_id = " + str(user_id) + ";")
+    cursor1.execute(" SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';")
 
     print "2"
 
@@ -395,7 +396,7 @@ def update_all(request):
 
     token =  new_token + past_token
     cursor3 = connection.cursor()
-    cursor3.execute(" UPDATE Users SET token = " + str(token) + "WHERE u_id = " + str(user_id) + ";")
+    cursor3.execute(" UPDATE Users SET token = " + str(token) + "WHERE u_id = '" + str(user_id) + "';")
 
     result = {}
 
@@ -417,7 +418,7 @@ def Update_Link(request):
     song_name = json_data['song_name']
 
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES (" +str(u_id)+", '"+str(sing_time)+"', "+str(score)+", '"+str(link)+"', '"+str(song_name)+"');" )
+    cursor.execute("INSERT INTO songs (u_id, sing_time, score, link, song_name) VALUES ('" +str(u_id)+"', '"+str(sing_time)+"', "+str(score)+", '"+str(link)+"', '"+str(song_name)+"');" )
     result = {}
 
     return JsonResponse(result)
@@ -449,8 +450,8 @@ def Search_song(request):
 
     cursor1 = connection.cursor()
 
-    print " SELECT * FROM Songs WHERE u_id = " + str(u_id) + " AND sing_time = '" + str(sing_time) + "';"
-    cursor1.execute(" SELECT * FROM Songs WHERE u_id = " + str(u_id) + " AND sing_time = '" + str(sing_time) + "';")
+    print " SELECT * FROM Songs WHERE u_id = '" + str(u_id) + "' AND sing_time = '" + str(sing_time) + "';"
+    cursor1.execute(" SELECT * FROM Songs WHERE u_id = '" + str(u_id) + "' AND sing_time = '" + str(sing_time) + "';")
 
     print "23333"
     user_info = cursor1.fetchall()
