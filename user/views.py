@@ -380,20 +380,12 @@ def update_all(request):
     json_data = json.loads(request.body)
     user_id = int(json_data['u_id'])
 
-    print "1"
-
     cursor1 = connection.cursor()
     cursor1.execute(" SELECT * FROM Users WHERE u_id = '" + str(user_id) + "';")
 
-    print "2"
-
     user_info = cursor1.fetchall()[0]
 
-    print user_info
-
     past_token = int(user_info[2])
-
-    print past_token
 
     new_token = int(json_data['token'])
 
